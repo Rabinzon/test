@@ -35,7 +35,7 @@ jobs:
       - name: Git push version bump
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: git push https://c:${GH_TOKEN}@github.com/Rabinzon/test.git main
+        run: git push https://Rabinzon:${{GH_TOKEN}}@github.com/Rabinzon/test.git main
       - id: set-version
         name: Output version change
         run: npm pkg get version
