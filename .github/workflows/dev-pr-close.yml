@@ -39,10 +39,8 @@ jobs:
       - name: Git push version bump
         uses: ad-m/github-push-action@master
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-          github_token: ${{ secrets.GH_ORG_PAT }}
-          repository: Rabinzon/test
-          force: true
       - id: set-version
         name: Output version change
         run: npm pkg get version
