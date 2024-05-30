@@ -2,6 +2,7 @@ name: 'Dev - PR Open'
 on:
   pull_request:
     types:
+      - reopened
       - opened
 jobs:
   add_comment:
