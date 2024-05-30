@@ -7,6 +7,7 @@ jobs:
   merge_pr:
     permissions:
       contents: write
+      pull-requests: write
 
     name: 'PR Merged'
     if: github.event.pull_request.merged == true
@@ -14,7 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GH_ORG_PAT }}
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+
       - uses: actions/setup-node@v2
         with:
           node-version: '16.x'
@@ -36,8 +39,10 @@ jobs:
       - name: Git push version bump
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+          github_token: ${{ secrets.GH_ORG_PAT }}
+          repository: Rabinzon/test
+          force: true
       - id: set-version
         name: Output version change
         run: npm pkg get version
